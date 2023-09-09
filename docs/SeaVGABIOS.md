@@ -1,5 +1,4 @@
-SeaVGABIOS is a sub-project of the SeaBIOS project - it is an open
-source implementation of a 16bit X86
+SeaVGABIOS is a sub-project of the SeaBIOS project - it is an open-source implementation of a 16bit X86
 [VGA BIOS](http://en.wikipedia.org/wiki/Video_BIOS). SeaVGABIOS is the
 default VGA BIOS on [QEMU](http://www.qemu.org/). SeaVGABIOS can also
 run natively on some X86 VGA hardware with
@@ -8,8 +7,8 @@ run natively on some X86 VGA hardware with
 Building SeaVGABIOS
 ===================
 
-To build SeaVGABIOS, obtain the [code](Download), run `make
-menuconfig` and select the type of VGA BIOS to build in the "VGA ROM"
+To build SeaVGABIOS, obtain the [code](Download.md), run `make
+menuconfig`, and select the type of VGA BIOS to build in the "VGA ROM"
 menu. Once selected, run `make` and the final VGA BIOS binary will be
 located in "out/vgabios.bin".
 
@@ -27,13 +26,13 @@ SeaVGABIOS code
 ===============
 
 The source code for SeaVGABIOS is located in the SeaBIOS
-[git repository](Download). The main VGA BIOS code is located in the
+[git repository](Download.md). The main VGA BIOS code is located in the
 "vgasrc/" directory. The VGA BIOS code is always compiled in 16bit
 mode.
 
 The SeaVGABIOS builds to a separate binary from the main SeaBIOS
 binary, and much of the VGA BIOS code is separate from the main BIOS
 code. However, much of the SeaBIOS
-[developer documentation](Developer_Documentation) applies to
+[developer documentation](Developer_Documentation.md) applies to
 SeaVGABIOS. To contribute, please join the
-[SeaBIOS mailing list](Mailinglist).
+[SeaBIOS mailing list](Mailinglist.md).

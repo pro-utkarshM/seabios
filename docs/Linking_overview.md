@@ -7,8 +7,8 @@ is due to several unusual requirements:
 * Some BIOS entry points must reside at specific hardcoded memory
   locations. The build must support positioning code and variables at
   specific locations.
-* In order to support multiple [memory models](Memory Model) the same
-  C code can be complied in three modes (16bit mode, 32bit segmented
+* In order to support multiple [memory models](Memory_Model.md) the same
+  C code can be compiled in three modes (16bit mode, 32bit segmented
   mode, and 32bit "flat" mode). Binary code from these three modes
   must be able to co-exist and on occasion reference each other.
 * There is a finite amount of memory available to the BIOS. The build
@@ -20,15 +20,15 @@ Code layout
 ===========
 
 To support the unusual build requirements, several
-[gcc](http://en.wikipedia.org/wiki/GNU_Compiler_Collection) compiler
+[GCC](http://en.wikipedia.org/wiki/GNU_Compiler_Collection) compiler
 options are used. The "-ffunction-sections" and "-fdata-sections"
 flags instruct the compiler to place each variable and function into
-its own
+it's own
 [ELF](http://en.wikipedia.org/wiki/Executable_and_Linkable_Format)
 section.
 
 The C code is compiled three times into three separate objects for
-each of the major supported [memory models](Memory Model):
+each of the major supported [memory models](Memory_Model.md):
 **code16.o**, **code32seg.o**, and **code32flat.o**. Information on
 the sections and symbols of these three objects are extracted (using
 **objdump**) and passed in to the **scripts/layoutrom.py** python
@@ -52,7 +52,7 @@ entry point in physical memory at 0xff859.
 This support is accomplished by placing the given code/variables into
 ELF sections that have a name containing the substring
 ".fixedaddr.0x1234" (where 0x1234 is the desired address). For
-variables in C code this is accomplished by marking the variables with
+variables in C code, this is accomplished by marking the variables with
 the VARFSEGFIXED(0x1234) macro. For assembler entry points the ORG
 macro is used (see **romlayout.S**).
 
@@ -70,14 +70,14 @@ reduces the overall size of the final binary.
 C code in three modes
 ---------------------
 
-SeaBIOS must support multiple [memory models](Memory Model). This is
+SeaBIOS must support multiple [memory models](Memory_Model.md). This is
 accomplished by compiling the C code three separate times into three
 separate objects.
 
 The C code within a mode must not accidentally call a C function in
 another mode, but multiple modes must all access the same single copy
 of global variables. Further, it is occasionally necessary for the C
-code in one mode to obtain the address of C code in another mode.
+code in one mode to obtain the address of the C code in another mode.
 
 In order to use the same global variables between all modes, the
 layoutrom.py script will detect references to global variables and
@@ -91,9 +91,9 @@ mode are isolated from each other during the linking stage. To support
 those situations where an address of a C function in another mode is
 required the build supports symbols with a special "\_cfuncX_"
 prefix. The layoutrom.py script detects these references and will emit
-a corresponding symbol definitions in the linker script that points to
+a corresponding symbol definition in the linker script that points to
 the C code of the specified mode. The call32() and stack_hop_back()
-macros automatically add the required prefix for C code, but the
+Macros automatically add the required prefix for C code, but the
 prefixes need to be explicitly added in assembler code.
 
 Build garbage collection
@@ -101,7 +101,7 @@ Build garbage collection
 
 To reduce the overall size of the final SeaBIOS binary the build
 supports automatically weeding out of unused code and variables. This
-is done with two separate processes: when supported the gcc
+is done with two separate processes: when supported by the GCC
 "-fwhole-program" compilation flag is used, and the layoutrom.py
 script checks for unreferenced ELF sections. The layoutrom.py script
 builds the final linker scripts with only referenced ELF sections, and
@@ -130,12 +130,12 @@ to free up space in this region.
 To support this feature, the build attempts to automatically detect
 which C code is exclusively initialization phase code (see
 layoutrom.py:checkRuntime()). It does this by finding all functions
-decorated with the VISIBLE32INIT macro and all functions only
+decorated with the VISIBLE32INIT macro and all functions are only
 reachable via functions with that macro. These "init only" functions
-are then grouped together and their location and size is stored in the
+are then grouped together and their location and size are stored in the
 binary for the runtime code to relocate (see post.c:reloc_preinit()).
 
-The build also locates all cross section code references along with
+The build also locates all cross-section code references along with
 all absolute memory addresses in the "init only" code. These addresses
 need to be modified with the new run-time address in order for the
 code to successfully run at a new address. The build finds the
@@ -149,12 +149,12 @@ At the conclusion of the main linking stage, the code is contained in
 the file **rom.o**. This object file contains all of the assembler
 code, variables, and the C code from all three memory model modes.
 
-At this point the **scripts/checkrom.py** script is run to perform
+At this point, the **scripts/checkrom.py** script is run to perform
 final checks on the code. The script performs some sanity checks, it
 may update some tables in the binary, and it reports some size
 information.
 
-After the checkrom.py script is run the final user visible binary is
+After the checkrom.py script is run the final user-visible binary is
 produced. The name of the final binary is either **bios.bin**,
 **Csm16.bin**, or **bios.bin.elf** depending on the SeaBIOS build
 requested.

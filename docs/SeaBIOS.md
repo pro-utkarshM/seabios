@@ -14,4 +14,4 @@ information on using SeaBIOS in coreboot. Please see the
 
 Please join the [mailing list](Mailinglist) to contribute to
 SeaBIOS. Information on the internals of SeaBIOS is available on the
-[Developer Documentation](Developer Documentation) page.
+[Developer Documentation](Developer_Documentation) page.

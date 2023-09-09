@@ -5,7 +5,7 @@ compiler tools.
 Building SeaBIOS
 ================
 
-First, [obtain the code](Download). SeaBIOS can be compiled for
+First, [obtain the code](Download.md). SeaBIOS can be compiled for
 several different build targets. It is also possible to configure
 additional compile time options - run **make menuconfig** to do this.
 
@@ -98,7 +98,7 @@ The **out/** directory is created by the build process - it contains
 all intermediate and final files.
 
 When reading the C code be aware that code that runs in 16bit mode can
-not arbitrarily access non-stack memory - see [Memory Model](Memory
-Model) for more details. For information on the major C code functions
+not arbitrarily access non-stack memory - see [Memory Model](Memory_Model.md) 
+for more details. For information on the major C code functions
 and where code execution starts see [Execution and code
-flow](Execution and code flow).
+flow](Execution_and_code_flow.md).
